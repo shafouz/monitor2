@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Repos</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function toggleForm(el) {
+      el.toggleAttribute("hidden")
+    }
+  </script>
+</head>
+
+<body>
+  {{ range . }}
+  <h3>{{ .Url }}</h3>
+  <button type="submit" onclick="toggleForm(this.nextElementSibling)">Edit</button>
+  <div id="repo-{{ .Id }}-edit" hidden>
+    <form action="/repos/u" method="post">
+      <label for="id">Id:</label><br>
+      <input type="number" id="id" name="id" value="{{ .Id }}" required><br><br>
+
+      <label for="url">URL:</label><br>
+      <input type="text" id="url" name="url" value="{{ .Url }}"><br><br>
+
+      <label for="directory">Directory:</label><br>
+      <input type="text" id="directory" name="directory" value="{{ .Directory }}"><br><br>
+
+      <label for="watched_files">Watched Files (JSON format):</label><br>
+      <textarea id="watched_files" name="watched_files" rows="5" cols="50">{{ printf "%s" .WatchedFiles }}</textarea><br><br>
+
+      <label for="remote">Remote:</label><br>
+      <input type="text" id="remote" name="remote" value="{{ .Remote }}"><br><br>
+
+      <label for="schedule_hours">Schedule Hours:</label><br>
+      <input type="number" id="schedule_hours" name="schedule_hours" value="{{ .ScheduleHours }}"><br><br>
+
+      <label for="deleted">Deleted:</label><br>
+      <input type="checkbox" id="deleted" name="deleted" value="true"><br><br>
+
+      <input type="submit" value="Submit">
+      <hr>
+    </form>
+  </div>
+  {{ end }}
+</body>
+
+</html>

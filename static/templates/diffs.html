@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Diffs</title>
+  </head>
+  <body>
+    {{ range . }}
+    <a href="/diff/{{ .Id }}">{{ .Url }} - {{ .CreatedAt.Format "2006-01-02 15:04" }}</a><br>
+    {{ end }}
+  </body>
+</html>

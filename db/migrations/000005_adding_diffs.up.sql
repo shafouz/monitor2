@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS Diff (
+  id TEXT NOT NULL,
+  body TEXT NOT NULL
+);

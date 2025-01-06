@@ -1,0 +1,2 @@
+ALTER TABLE Diff
+ADD commit TEXT NOT NULL DEFAULT ''; 

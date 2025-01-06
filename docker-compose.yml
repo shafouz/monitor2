@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    hostname: postgres
+    env_file: .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  api:
+    build:
+      context:  ./
+      dockerfile: Dockerfile
+    hostname: api
+    env_file: .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - repos:/repos
+      - ./static:/app/static
+      - ./src/crawler/scripts:/app/src/crawler/scripts
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+    driver: local
+  repos:

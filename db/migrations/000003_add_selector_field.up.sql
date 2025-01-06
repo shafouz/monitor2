@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS Endpoint ADD COLUMN Selector TEXT;

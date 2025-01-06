@@ -1,0 +1,2 @@
+ALTER TABLE Diff
+ADD url TEXT NOT NULL DEFAULT 'not-updated'; 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Endpoints</title>
+    <style>
+.hidden {
+  display: none;
+}
+    </style>
+    <script>
+      function toggleForm(el) {
+        el.toggleAttribute("hidden")
+      }
+    </script>
+  </head>
+
+  <body>
+    {{ range . }}
+    <div class="endpoint">
+      <h3>{{ .Url }}{{ if .Deleted }} - Deleted{{ end }}</h3>
+      <button type="submit" onclick="toggleForm(this.nextElementSibling)">Show</button>
+      <div id="endpoint-{{ .Id }}" hidden>
+        <pre>
+      <code>
+        {{ printf "%s" .ResponseBody }}
+      </code>
+        </pre>
+      </div>
+      <button type="submit" onclick="toggleForm(this.nextElementSibling)">Edit</button>
+      <div id="endpoint-{{ .Id }}-edit" hidden>
+        <form action="/crawl/u" method="post">
+          <label for="url">URL:</label><br>
+          <input type="text" id="url" name="url" value="{{ .Url }}" required><br><br>
+
+          <label for="schedule_hours">Schedule Hours:</label><br>
+          <input type="number" id="schedule_hours" name="schedule_hours" value="{{ .ScheduleHours }}"><br><br>
+
+          <label for="selector">Selector:</label><br>
+          <input type="text" id="selector" name="selector" value="{{ .Selector }}"><br><br>
+
+          <label for="profile">Profile:</label><br>
+          <input type="text" id="profile" name="profile" value="{{ .Profile }}"><br><br>
+
+          <label for="deleted">Deleted:</label><br>
+          <input type="checkbox" id="deleted" name="deleted" value="true"><br><br>
+
+          <input type="submit" value="Submit">
+          <hr>
+        </form>
+      </div>
+    </div>
+    {{ end }}
+  </body>
+
+</html>
